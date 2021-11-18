@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0e2772a8-46a8-40e1-99ea-bcbfc72e24b9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+EXTRACT (year from servicio_mudanza.FECHAINICIO_MUDANZA) AS fecha, SUM(factura.TOTAL)
+FROM servicio_mudanza
+INNER JOIN detalle_factura ON detalle_factura.ID_MUDANZA = servicio_mudanza.ID_MUDANZA
+INNER JOIN factura ON factura.ID_FACTURA = detalle_factura.ID_FACTURA
+GROUP BY 1
+ORDER BY 1 ASC]]>
+	</queryString>
+	<field name="fecha" class="java.lang.Double"/>
+	<field name="sum" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="85" y="11" width="384" height="55" uuid="fe899d35-7157-446d-9432-eb30488cc70a"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[EMPRESA DE MUDANZAS "MUDMAR" - INGRESOS ANUALES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="152" y="2" width="100" height="20" uuid="d709894f-a80d-4ea3-8a80-797bb693969a"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="2" width="100" height="20" uuid="ceb45448-f77c-4a63-9deb-e82fec1af4cc"/>
+				<text><![CDATA[Ingresos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="152" y="12" width="100" height="20" uuid="116bea4f-6837-405e-b0c5-58417cf0bca4"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="12" width="100" height="20" uuid="222e035e-c2d6-41b5-b476-c4c19d3811ac"/>
+				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="201" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="71" y="18" width="419" height="172" uuid="318f4ff9-663f-41b9-8bea-aefada5d8e81"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Reporte_ingresos"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{fecha}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{sum}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
